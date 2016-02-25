@@ -46,7 +46,7 @@ include_directories (
 #  ソースの設定
 # ===================================================================
 
-set (mincov_SOURCES
+set (ym_mincov_SOURCES
   src/LbCS.cc
   src/LbMAX.cc
   src/LbMIS1.cc
@@ -67,8 +67,22 @@ set (mincov_SOURCES
 # ===================================================================
 #  ターゲットの設定
 # ===================================================================
-ym_add_library (ym_mincov
-  SHARED
-  ${mincov_SOURCES}
-  DESTINATION ${YM_INSTALL_LIBDIR}
+
+#ym_add_library (ym_mincov
+#  SHARED
+#  ${mincov_SOURCES}
+#  DESTINATION ${YM_INSTALL_LIBDIR}
+#  )
+
+add_library ( ym_mincov
+  OBJECT
+  ${ym_mincov_SOURCES}
+  )
+
+target_compile_options ( ym_mincov
+  PRIVATE "-O3" "-fPIC"
+  )
+
+target_compile_definitions ( ym_mincov
+  PRIVATE "-DNDEBUG"
   )
