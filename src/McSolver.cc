@@ -17,7 +17,7 @@
 #include "SelSimple.h"
 #include "SelCS.h"
 
-#include "YmUtils/RandGen.h"
+#include "ym/RandGen.h"
 
 
 BEGIN_NAMESPACE_YM_MINCOV

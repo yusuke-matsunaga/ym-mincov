@@ -9,8 +9,8 @@
 
 #include "LbMIS3.h"
 #include "McMatrix.h"
-#include "YmAlgo/Graph.h"
-#include "YmUtils/SimpleAlloc.h"
+#include "ym/UdGraph.h"
+#include "ym/SimpleAlloc.h"
 
 
 BEGIN_NAMESPACE_YM_MINCOV
@@ -37,7 +37,7 @@ LbMIS3::operator()(const McMatrix& matrix)
   ymuint rs = matrix.row_size();
   ymuint rn = matrix.row_num();
 
-  Graph graph(rs);
+  UdGraph graph(rs);
 
   void* p = alloc.get_memory(sizeof(ymuint) * rs);
   ymuint* row_map = new (p) ymuint[rs];

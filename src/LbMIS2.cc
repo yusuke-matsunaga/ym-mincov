@@ -11,7 +11,7 @@
 #include "McMatrix.h"
 #include "MisNode.h"
 #include "MisNodeHeap.h"
-#include "YmUtils/SimpleAlloc.h"
+#include "ym/SimpleAlloc.h"
 
 
 BEGIN_NAMESPACE_YM_MINCOV

@@ -9,8 +9,8 @@
 /// All rights reserved.
 
 
-#include "mincov_nsdef.h"
-#include "YmAlgo/MinCov.h"
+#include "ym/ym_mincov.h"
+#include "ym/MinCov.h"
 
 
 BEGIN_NAMESPACE_YM_MINCOV

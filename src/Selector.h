@@ -9,7 +9,7 @@
 /// All rights reserved.
 
 
-#include "mincov_nsdef.h"
+#include "ym/ym_mincov.h"
 
 
 BEGIN_NAMESPACE_YM_MINCOV

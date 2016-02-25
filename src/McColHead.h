@@ -9,9 +9,10 @@
 /// All rights reserved.
 
 
-#include "mincov_nsdef.h"
+#include "ym/ym_mincov.h"
+
 #include "McCell.h"
-#include "YmUtils/UnitAlloc.h"
+#include "ym/UnitAlloc.h"
 
 
 BEGIN_NAMESPACE_YM_MINCOV

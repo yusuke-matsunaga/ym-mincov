@@ -7,7 +7,7 @@
 /// All rights reserved.
 
 
-#include "YmAlgo/MinCov.h"
+#include "ym/MinCov.h"
 #include "McSolver.h"
 #include "McSolverImpl.h"
 
