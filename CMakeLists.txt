@@ -68,21 +68,6 @@ set (ym_mincov_SOURCES
 #  ターゲットの設定
 # ===================================================================
 
-#ym_add_library (ym_mincov
-#  SHARED
-#  ${mincov_SOURCES}
-#  DESTINATION ${YM_INSTALL_LIBDIR}
-#  )
-
-add_library ( ym_mincov
-  OBJECT
+ym_add_object_library ( ym_mincov
   ${ym_mincov_SOURCES}
-  )
-
-target_compile_options ( ym_mincov
-  PRIVATE "-O3" "-fPIC"
-  )
-
-target_compile_definitions ( ym_mincov
-  PRIVATE "-DNDEBUG"
   )
