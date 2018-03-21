@@ -57,13 +57,13 @@ McSolver::~McSolver()
 // @param[in] row_size 行数
 // @param[in] col_size 列数
 void
-McSolver::set_size(ymuint32 row_size,
-		   ymuint32 col_size)
+McSolver::set_size(int row_size,
+		   int col_size)
 {
   delete mMatrix;
   delete mCostArray;
-  mCostArray = new ymuint32[col_size];
-  for (ymuint i = 0; i < col_size; ++ i) {
+  mCostArray = new int[col_size];
+  for ( int i = 0; i < col_size; ++ i ) {
     mCostArray[i] = 1;
   }
   mMatrix = new McMatrix(row_size, col_size, mCostArray);
@@ -73,8 +73,8 @@ McSolver::set_size(ymuint32 row_size,
 // @param[in] col_pos 追加する要素の列番号
 // @param[in] cost コスト
 void
-McSolver::set_col_cost(ymuint32 col_pos,
-		       ymuint32 cost)
+McSolver::set_col_cost(int col_pos,
+		       int cost)
 {
   mCostArray[col_pos] = cost;
 }
@@ -83,8 +83,8 @@ McSolver::set_col_cost(ymuint32 col_pos,
 // @param[in] row_pos 追加する要素の行番号
 // @param[in] col_pos 追加する要素の列番号
 void
-McSolver::insert_elem(ymuint32 row_pos,
-		      ymuint32 col_pos)
+McSolver::insert_elem(int row_pos,
+		      int col_pos)
 {
   mMatrix->insert_elem(row_pos, col_pos);
 }
@@ -92,12 +92,12 @@ McSolver::insert_elem(ymuint32 row_pos,
 // @brief 最小被覆問題を解く．
 // @param[out] solution 選ばれた列集合
 // @return 解のコスト
-ymuint32
-McSolver::exact(vector<ymuint32>& solution)
+int
+McSolver::exact(vector<int>& solution)
 {
   McSolverImpl impl(*mMatrix, *mLbCalc, *mSelector);
 
-  ymuint32 cost = impl.exact(solution);
+  int cost = impl.exact(solution);
 
   return cost;
 }
@@ -106,8 +106,8 @@ McSolver::exact(vector<ymuint32>& solution)
 // @param[out] solution 選ばれた列集合
 // @param[in] alg ヒューリスティックの種類
 // @return 解のコスト
-ymuint32
-McSolver::heuristic(vector<ymuint32>& solution,
+int
+McSolver::heuristic(vector<int>& solution,
 		    MinCov::AlgType alg)
 {
   McMatrix cur_matrix(*mMatrix);
@@ -117,22 +117,22 @@ McSolver::heuristic(vector<ymuint32>& solution,
 
   if ( cur_matrix.row_num() > 0 ) {
     switch ( alg ) {
-    case MinCov::kGreedy:
+    case MinCov::AlgType::kGreedy:
       greedy(cur_matrix, solution);
       break;
 
-    case MinCov::kRandom:
+    case MinCov::AlgType::kRandom:
       random(cur_matrix, solution);
       break;
 
-    case MinCov::kMCT:
+    case MinCov::AlgType::kMCT:
       break;
     }
   }
 
   ASSERT_COND( mMatrix->verify(solution) );
 
-  ymuint32 cost = mMatrix->cost(solution);
+  int cost = mMatrix->cost(solution);
 
   return cost;
 }
@@ -142,19 +142,19 @@ McSolver::heuristic(vector<ymuint32>& solution,
 // @param[out] solution 選ばれた列集合
 void
 McSolver::greedy(const McMatrix& matrix,
-		 vector<ymuint32>& solution)
+		 vector<int>& solution)
 {
   if ( McSolver_debug ) {
     cout << "McSolver::greedy() start" << endl;
   }
 
 #if 0
-  for (ymuint i = 0; i < 10000; ++ i) {
+  for ( int i = 0; i < 10000; ++ i ) {
   McMatrix cur_matrix(matrix);
-  vector<ymuint32> solution;
+  vector<int> solution;
   while ( cur_matrix.row_num() > 0 ) {
     // 次の分岐のための列をとってくる．
-    ymuint col = (*mSelector)(cur_matrix);
+    int col = (*mSelector)(cur_matrix);
 
     // その列を選択する．
     cur_matrix.select_col(col);
@@ -172,7 +172,7 @@ McSolver::greedy(const McMatrix& matrix,
 
   while ( cur_matrix.row_num() > 0 ) {
     // 次の分岐のための列をとってくる．
-    ymuint col = (*mSelector)(cur_matrix);
+    int col = (*mSelector)(cur_matrix);
 
     // その列を選択する．
     cur_matrix.select_col(col);
@@ -191,7 +191,7 @@ McSolver::greedy(const McMatrix& matrix,
 // @param[out] solution 選ばれた列集合
 void
 McSolver::random(const McMatrix& matrix,
-		 vector<ymuint32>& solution)
+		 vector<int>& solution)
 {
   if ( McSolver_debug ) {
     cout << "McSolver::random() start" << endl;
@@ -199,24 +199,24 @@ McSolver::random(const McMatrix& matrix,
 
   RandGen rg;
 
-  ymuint count_limit = 1000;
+  int count_limit = 1000;
 
   bool first = true;
-  ymuint32 best_cost = 0;
-  vector<ymuint32> best_solution;
-  for (ymuint count = 0; count < count_limit; ++ count) {
+  int best_cost = 0;
+  vector<int> best_solution;
+  for ( int count = 0; count < count_limit; ++ count ) {
     McMatrix cur_matrix(matrix);
-    vector<ymuint32> cur_solution;
+    vector<int> cur_solution;
 
     while ( cur_matrix.row_num() > 0 ) {
       // ランダムに選ぶ
-      ymuint col = 0; // 未完
+      int col = 0; // 未完
       const McRowHead* rh = cur_matrix.row_front();
-      ymuint n = rh->num();
+      int n = rh->num();
       ASSERT_COND( n > 0 );
-      ymuint idx = rg.int32() % n;
-      for (const McCell* cell = rh->front();
-	   !rh->is_end(cell); cell = cell->row_next(), -- idx) {
+      int idx = rg.int32() % n;
+      for ( const McCell* cell = rh->front();
+	    !rh->is_end(cell); cell = cell->row_next(), -- idx ) {
 	if ( idx == 0 ) {
 	  col = cell->col_pos();
 	  break;
@@ -229,22 +229,22 @@ McSolver::random(const McMatrix& matrix,
 
       cur_matrix.reduce(cur_solution);
     }
-    ymuint32 cur_cost = matrix.cost(cur_solution);
+    int cur_cost = matrix.cost(cur_solution);
     if ( first || best_cost > cur_cost ) {
       first = false;
       best_cost = cur_cost;
       best_solution = cur_solution;
       {
-	ymuint32 base_cost = matrix.cost(solution);
+	int base_cost = matrix.cost(solution);
 	cout << "best so far = " << best_cost + base_cost
 	     << " ( " << best_cost << " + " << base_cost << " )"<< endl;
       }
     }
   }
 
-  for (vector<ymuint32>::iterator p = best_solution.begin();
+  for (vector<int>::iterator p = best_solution.begin();
        p != best_solution.end(); ++ p) {
-    ymuint32 col = *p;
+    int col = *p;
     solution.push_back(col);
   }
 }

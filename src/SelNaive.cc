@@ -20,14 +20,14 @@ BEGIN_NAMESPACE_YM_MINCOV
 // @brief 次の列を選ぶ．
 // @param[in] matrix 対象の行列
 // @return 選ばれた列番号を返す．
-ymuint
+int
 SelNaive::operator()(const McMatrix& matrix)
 {
   // 最もカバーしている行の多い列を選ぶ
-  ymuint max_num = 0;
-  ymuint max_col = 0;
-  for (const McColHead* col = matrix.col_front();
-       !matrix.is_col_end(col); col = col->next()) {
+  int max_num = 0;
+  int max_col = 0;
+  for ( const McColHead* col = matrix.col_front();
+	!matrix.is_col_end(col); col = col->next() ) {
     if ( max_num < col->num() ) {
       max_num = col->num();
       max_col = col->pos();

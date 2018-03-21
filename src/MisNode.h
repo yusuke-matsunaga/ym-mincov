@@ -30,15 +30,15 @@ public:
   /// @brief 内容を初期化する．
   /// @param[in] row_pos 行番号
   void
-  set(ymuint row_pos);
+  set(int row_pos);
 
   /// @brief 隣接ノードの情報を設定する．
   void
-  set_adj_link(ymuint adj_num,
+  set_adj_link(int adj_num,
 	       MisNode** adj_link);
 
   /// @brief 行番号を返す．
-  ymuint
+  int
   row_pos() const;
 
   /// @brief 削除済みフラグを返す．
@@ -46,16 +46,16 @@ public:
   deleted() const;
 
   /// @brief 隣接するノード数を返す．
-  ymuint
+  int
   adj_size() const;
 
   /// @brief 隣接するノードを返す．
   /// @param[in] pos 位置番号 ( 0 <= pos < adj_size() )
   MisNode*
-  adj_node(ymuint pos) const;
+  adj_node(int pos) const;
 
   /// @brief 有効な隣接ノード数を返す．
-  ymuint
+  int
   adj_num() const;
 
   /// @brief adj_num を１減らす
@@ -69,19 +69,19 @@ private:
   //////////////////////////////////////////////////////////////////////
 
   // 行番号
-  ymuint32 mRowPos;
+  int mRowPos;
 
   // 隣接するノードのポインタ配列
   MisNode** mAdjLink;
 
   // mAdjLink のサイズ
-  ymuint32 mAdjSize;
+  int mAdjSize;
 
   // mAdjLink 中の有効な要素数
-  ymuint32 mNum;
+  int mNum;
 
   // ヒープ上のインデックス
-  ymuint32 mHeapIdx;
+  int mHeapIdx;
 
 };
 
@@ -94,7 +94,7 @@ private:
 // @param[in] row_pos 行番号
 inline
 void
-MisNode::set(ymuint row_pos)
+MisNode::set(int row_pos)
 {
   mRowPos = row_pos;
   mAdjLink = nullptr;
@@ -106,7 +106,7 @@ MisNode::set(ymuint row_pos)
 // @brief 隣接ノードの情報を設定する．
 inline
 void
-MisNode::set_adj_link(ymuint adj_num,
+MisNode::set_adj_link(int adj_num,
 		      MisNode** adj_link)
 {
   mAdjLink = adj_link;
@@ -116,7 +116,7 @@ MisNode::set_adj_link(ymuint adj_num,
 
 // @brief 行番号を返す．
 inline
-ymuint
+int
 MisNode::row_pos() const
 {
   return mRowPos;
@@ -132,7 +132,7 @@ MisNode::deleted() const
 
 // @brief 隣接するノード数を返す．
 inline
-ymuint
+int
 MisNode::adj_size() const
 {
   return mAdjSize;
@@ -142,14 +142,14 @@ MisNode::adj_size() const
 // @param[in] pos 位置番号 ( 0 <= pos < adj_size() )
 inline
 MisNode*
-MisNode::adj_node(ymuint pos) const
+MisNode::adj_node(int pos) const
 {
   return mAdjLink[pos];
 }
 
 // @brief 有効な隣接ノード数を返す．
 inline
-ymuint
+int
 MisNode::adj_num() const
 {
   return mNum;

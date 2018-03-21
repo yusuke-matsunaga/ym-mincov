@@ -20,15 +20,15 @@ BEGIN_NAMESPACE_YM_MINCOV
 // @brief 下限を求める．
 // @param[in] matrix 対象の行列
 // @return 下限値
-ymuint32
+int
 LbCS::operator()(const McMatrix& matrix)
 {
   double cost = 0.0;
-  for (const McRowHead* row = matrix.row_front();
-       !matrix.is_row_end(row); row = row->next()) {
+  for ( const McRowHead* row = matrix.row_front();
+	!matrix.is_row_end(row); row = row->next() ) {
     double min_cost = DBL_MAX;
-    for (const McCell* cell = row->front();
-	 !row->is_end(cell); cell = cell->row_next()) {
+    for ( const McCell* cell = row->front();
+	  !row->is_end(cell); cell = cell->row_next() ) {
       const McColHead* col = matrix.col(cell->col_pos());
       double col_cost = static_cast<double>(matrix.col_cost(col->pos())) / col->num();
       if ( min_cost > col_cost ) {
@@ -39,7 +39,7 @@ LbCS::operator()(const McMatrix& matrix)
   }
   cost = ceil(cost);
 
-  return static_cast<ymuint32>(cost);
+  return static_cast<int>(cost);
 }
 
 END_NAMESPACE_YM_MINCOV

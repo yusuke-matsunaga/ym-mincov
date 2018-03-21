@@ -25,7 +25,7 @@ public:
 
   /// @brief コンストラクタ
   /// @param[in] num ノード数
-  MisNodeHeap(ymuint num);
+  MisNodeHeap(int num);
 
   /// @brief デストラクタ
   ~MisNodeHeap();
@@ -37,13 +37,13 @@ public:
   //////////////////////////////////////////////////////////////////////
 
   /// @brief 確保されているノード数を返す．
-  ymuint
+  int
   node_size() const;
 
   /// @brief ノードを返す．
   /// @param[in] pos 位置番号 ( 0 <= pos < node_size() )
   MisNode*
-  node(ymuint pos);
+  node(int pos);
 
   /// @brief ヒープが空の時 true を返す．
   bool
@@ -101,7 +101,7 @@ private:
   /// @param[in] pos 位置
   /// @param[in] node ノード
   void
-  set(ymuint pos,
+  set(int pos,
       MisNode* node);
 
 
@@ -111,7 +111,7 @@ private:
   //////////////////////////////////////////////////////////////////////
 
   // ノード数
-  ymuint32 mNodeSize;
+  int mNodeSize;
 
   // ノードの実体の配列
   // サイズは mNodeSize
@@ -121,7 +121,7 @@ private:
   MisNode** mNodeHeap;
 
   // ヒープ木中にあるノード数
-  ymuint32 mNodeNum;
+  int mNodeNum;
 
 };
 
@@ -132,7 +132,7 @@ private:
 
 // @brief 確保されているノード数を返す．
 inline
-ymuint
+int
 MisNodeHeap::node_size() const
 {
   return mNodeSize;
@@ -142,7 +142,7 @@ MisNodeHeap::node_size() const
 // @param[in] pos 位置番号 ( 0 <= pos < node_size() )
 inline
 MisNode*
-MisNodeHeap::node(ymuint pos)
+MisNodeHeap::node(int pos)
 {
   return &mNodeChunk[pos];
 }
@@ -174,7 +174,7 @@ MisNodeHeap::delete_node(MisNode* node)
 {
   ASSERT_COND( !empty() );
 
-  ymuint idx = node->mHeapIdx;
+  int idx = node->mHeapIdx;
 
   ASSERT_COND( idx > 0 );
 
@@ -213,14 +213,14 @@ inline
 void
 MisNodeHeap::update(MisNode* node)
 {
-  ymuint idx = node->mHeapIdx;
+  int idx = node->mHeapIdx;
   ASSERT_COND( idx > 0 );
 
   -- idx;
   ASSERT_COND( mNodeHeap[idx] == node );
 
   if ( idx > 0 ) {
-    ymuint p_idx = (idx - 1) / 2;
+    int p_idx = (idx - 1) / 2;
     MisNode* p_node = mNodeHeap[p_idx];
     if ( compare(p_node, node) > 0 ) {
       move_up(node);
@@ -250,7 +250,7 @@ MisNodeHeap::compare(MisNode* node1,
 // @param[in] node 要素
 inline
 void
-MisNodeHeap::set(ymuint pos,
+MisNodeHeap::set(int pos,
 		 MisNode* node)
 {
   mNodeHeap[pos] = node;

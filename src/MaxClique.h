@@ -23,7 +23,7 @@ public:
 
   /// @brief コンストラクタ
   /// @param[in] size ノード数
-  MaxClique(ymuint size);
+  MaxClique(int size);
 
   /// @brief デストラクタ
   ~MaxClique();
@@ -36,19 +36,19 @@ public:
 
   /// @brief コストを設定する．
   void
-  set_cost(ymuint32 id,
+  set_cost(int id,
 	   double cost);
 
   /// @brief 2つのノードを隣接させる．
   /// @param[in] id1, id2 ノード番号
   void
-  connect(ymuint32 id1,
-	  ymuint32 id2);
+  connect(int id1,
+	  int id2);
 
   /// @brief 最大クリークを求める．
   /// @param[out] ans 解のノード番号を入れる配列
   double
-  solve(vector<ymuint32>& ans);
+  solve(vector<int>& ans);
 
 
 private:
@@ -60,7 +60,7 @@ private:
   vector<double> mCostArray;
 
   // 隣接ノードリストの配列
-  vector<vector<ymuint32> > mNlistArray;
+  vector<vector<int> > mNlistArray;
 
 };
 

@@ -23,7 +23,7 @@ class MinCov
 public:
 
   /// @brief ヒューリスティックの種類を表す列挙型
-  enum AlgType {
+  enum class AlgType {
     kGreedy,
     kRandom,
     kMCT
@@ -48,36 +48,36 @@ public:
   /// @param[in] row_size 行数
   /// @param[in] col_size 列数
   void
-  set_size(ymuint row_size,
-	   ymuint col_size);
+  set_size(int row_size,
+	   int col_size);
 
   /// @brief 列のコストを設定する
   /// @param[in] col_pos 追加する要素の列番号
   /// @param[in] cost コスト
   void
-  set_col_cost(ymuint col_pos,
-	       ymuint cost);
+  set_col_cost(int col_pos,
+	       int cost);
 
   /// @brief 要素を追加する．
   /// @param[in] row_pos 追加する要素の行番号
   /// @param[in] col_pos 追加する要素の列番号
   void
-  insert_elem(ymuint row_pos,
-	      ymuint col_pos);
+  insert_elem(int row_pos,
+	      int col_pos);
 
   /// @brief 最小被覆問題を解く．
   /// @param[out] solution 選ばれた列集合
   /// @return 解のコスト
-  ymuint
-  exact(vector<ymuint>& solution);
+  int
+  exact(vector<int>& solution);
 
   /// @brief ヒューリスティックで最小被覆問題を解く．
   /// @param[out] solution 選ばれた列集合
   /// @param[in] alg ヒューリスティックの種類
   /// @return 解のコスト
-  ymuint
-  heuristic(vector<ymuint>& solution,
-	    AlgType alg = kGreedy);
+  int
+  heuristic(vector<int>& solution,
+	    AlgType alg = AlgType::kGreedy);
 
   /// @brief partition フラグを設定する．
   /// @param[in] flag 分割を行う時 true にセットする．
@@ -92,7 +92,7 @@ public:
   /// @brief デバッグで表示する最大深さを設定する．
   /// @param[in] depth セットする最大深さ
   void
-  set_max_depth(ymuint depth);
+  set_max_depth(int depth);
 
 
 private:

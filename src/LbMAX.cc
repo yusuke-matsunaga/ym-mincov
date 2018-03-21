@@ -24,21 +24,18 @@ LbMAX::LbMAX()
 // @brief デストラクタ
 LbMAX::~LbMAX()
 {
-  for (vector<LbCalc*>::iterator p = mCalcList.begin();
-       p != mCalcList.end(); ++ p) {
-    delete *p;
+  for ( auto calc: mCalcList ) {
+    delete calc;
   }
 }
 
 // @brief 下界の計算をする．
-ymuint32
+int
 LbMAX::operator()(const McMatrix& matrix)
 {
-  ymuint32 max_val = 0;
-  for (vector<LbCalc*>::iterator p = mCalcList.begin();
-       p != mCalcList.end(); ++ p) {
-    LbCalc& calc = **p;
-    ymuint32 val = calc(matrix);
+  int max_val = 0;
+  for ( auto calc_p: mCalcList ) {
+    int val = (*calc_p)(matrix);
     if ( max_val < val ) {
       max_val = val;
     }

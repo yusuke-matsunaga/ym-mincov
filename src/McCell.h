@@ -40,11 +40,11 @@ public:
   //////////////////////////////////////////////////////////////////////
 
   /// @brief 行番号を返す．
-  ymuint32
+  int
   row_pos() const;
 
   /// @brief 列番号を返す．
-  ymuint32
+  int
   col_pos() const;
 
   /// @brief 同じ行の直前の要素を返す．
@@ -70,10 +70,10 @@ private:
   //////////////////////////////////////////////////////////////////////
 
   // 行番号
-  ymuint32 mRowPos;
+  int mRowPos;
 
   // 列番号
-  ymuint32 mColPos;
+  int mColPos;
 
   // 左隣の要素
   McCell* mLeftLink;
@@ -108,7 +108,7 @@ McCell::~McCell()
 
 // @brief 行番号を返す．
 inline
-ymuint32
+int
 McCell::row_pos() const
 {
   return mRowPos;
@@ -116,7 +116,7 @@ McCell::row_pos() const
 
 // @brief 列番号を返す．
 inline
-ymuint32
+int
 McCell::col_pos() const
 {
   return mColPos;

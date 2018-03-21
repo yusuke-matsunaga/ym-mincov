@@ -30,7 +30,7 @@ public:
 
   /// @brief 下界の計算をする
   virtual
-  ymuint32
+  int
   operator()(const McMatrix& matrix);
 
 };

@@ -29,7 +29,7 @@ private:
 
   /// @brief コンストラクタ
   /// @param[in] pos 列番号
-  McColHead(ymuint pos);
+  McColHead(int pos);
 
   /// @brief デストラクタ
   ~McColHead();
@@ -41,11 +41,11 @@ public:
   //////////////////////////////////////////////////////////////////////
 
   /// @brief 列番号を返す．
-  ymuint32
+  int
   pos() const;
 
   /// @brief 要素数を返す．
-  ymuint32
+  int
   num() const;
 
   /// @brief 先頭の要素を返す．
@@ -74,7 +74,7 @@ public:
 public:
 
   mutable
-  ymuint32 mWork;
+  int mWork;
 
 private:
   //////////////////////////////////////////////////////////////////////
@@ -111,10 +111,10 @@ private:
   //////////////////////////////////////////////////////////////////////
 
   // 列番号
-  ymuint32 mPos;
+  int mPos;
 
   // 要素数
-  ymuint32 mNum;
+  int mNum;
 
   // 二重連結リストのダミーヘッダ
   McCell mDummy;
@@ -137,7 +137,7 @@ private:
 // @brief コンストラクタ
 // @param[in] pos 列番号
 inline
-McColHead::McColHead(ymuint pos) :
+McColHead::McColHead(int pos) :
   mPos(pos),
   mNum(0),
   mPrev(nullptr),
@@ -156,7 +156,7 @@ McColHead::~McColHead()
 
 // @brief 列番号を返す．
 inline
-ymuint32
+int
 McColHead::pos() const
 {
   return mPos;
@@ -164,7 +164,7 @@ McColHead::pos() const
 
 // @brief 要素数を返す．
 inline
-ymuint32
+int
 McColHead::num() const
 {
   return mNum;

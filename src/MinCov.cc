@@ -34,8 +34,8 @@ MinCov::~MinCov()
 // @param[in] row_size 行数
 // @param[in] col_size 列数
 void
-MinCov::set_size(ymuint32 row_size,
-		 ymuint32 col_size)
+MinCov::set_size(int row_size,
+		 int col_size)
 {
   mSolver->set_size(row_size, col_size);
 }
@@ -44,8 +44,8 @@ MinCov::set_size(ymuint32 row_size,
 // @param[in] col_pos 追加する要素の列番号
 // @param[in] cost コスト
 void
-MinCov::set_col_cost(ymuint32 col_pos,
-		     ymuint32 cost)
+MinCov::set_col_cost(int col_pos,
+		     int cost)
 {
   mSolver->set_col_cost(col_pos, cost);
 }
@@ -54,8 +54,8 @@ MinCov::set_col_cost(ymuint32 col_pos,
 // @param[in] row_pos 追加する要素の行番号
 // @param[in] col_pos 追加する要素の列番号
 void
-MinCov::insert_elem(ymuint32 row_pos,
-		    ymuint32 col_pos)
+MinCov::insert_elem(int row_pos,
+		    int col_pos)
 {
   mSolver->insert_elem(row_pos, col_pos);
 }
@@ -63,8 +63,8 @@ MinCov::insert_elem(ymuint32 row_pos,
 // @brief 最小被覆問題を解く．
 // @param[out] solution 選ばれた列集合
 // @return 解のコスト
-ymuint32
-MinCov::exact(vector<ymuint32>& solution)
+int
+MinCov::exact(vector<int>& solution)
 {
   return mSolver->exact(solution);
 }
@@ -73,8 +73,8 @@ MinCov::exact(vector<ymuint32>& solution)
 // @param[out] solution 選ばれた列集合
 // @param[in] alg ヒューリスティックの種類
 // @return 解のコスト
-ymuint32
-MinCov::heuristic(vector<ymuint32>& solution,
+int
+MinCov::heuristic(vector<int>& solution,
 		  AlgType alg)
 {
   return mSolver->heuristic(solution, alg);
@@ -96,7 +96,7 @@ MinCov::set_debug(bool flag)
 
 // @brief デバッグで表示する最大深さを設定する．
 void
-MinCov::set_max_depth(ymuint depth)
+MinCov::set_max_depth(int depth)
 {
   nsMincov::McSolverImpl::set_max_depth(depth);
 }

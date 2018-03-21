@@ -18,7 +18,7 @@ BEGIN_NAMESPACE_YM_MINCOV
 
 // @brief コンストラクタ
 // @param[in] num ノード数
-MisNodeHeap::MisNodeHeap(ymuint num)
+MisNodeHeap::MisNodeHeap(int num)
 {
   mNodeSize = num;
   mNodeChunk = new MisNode[num];
@@ -38,7 +38,7 @@ MisNodeHeap::~MisNodeHeap()
 void
 MisNodeHeap::move_down(MisNode* node)
 {
-  ymuint idx = node->mHeapIdx;
+  int idx = node->mHeapIdx;
   if ( idx == 0 ) {
     // node はヒープに含まれない．
     return;
@@ -47,8 +47,8 @@ MisNodeHeap::move_down(MisNode* node)
   -- idx;
   for ( ; ; ) {
     // ヒープ木の性質から親の位置から子の位置が分かる．
-    ymuint l_idx = idx * 2 + 1;
-    ymuint r_idx = l_idx + 1;
+    int l_idx = idx * 2 + 1;
+    int r_idx = l_idx + 1;
     if ( r_idx > mNodeNum ) {
       // 左右の子供を持たない時
       break;
@@ -96,7 +96,7 @@ MisNodeHeap::move_down(MisNode* node)
 void
 MisNodeHeap::move_up(MisNode* node)
 {
-  ymuint idx = node->mHeapIdx;
+  int idx = node->mHeapIdx;
   if ( idx == 0 ) {
     // node はヒープに含まれない．
     return;
@@ -105,7 +105,7 @@ MisNodeHeap::move_up(MisNode* node)
   -- idx;
   while ( idx > 0 ) {
     MisNode* node = mNodeHeap[idx];
-    ymuint p_idx = (idx - 1) / 2;
+    int p_idx = (idx - 1) / 2;
     MisNode* p_node = mNodeHeap[p_idx];
     if ( compare(p_node, node) > 0 ) {
       set(p_idx, node);
@@ -124,7 +124,7 @@ MisNodeHeap::print(ostream& s)
 {
   s << "*** MisNodeHeap ***" << endl
     << " node_size() = " << node_size() << endl;
-  for (ymuint i = 0; i < node_size(); ++ i) {
+  for ( int i = 0; i < node_size(); ++ i ) {
     MisNode* node1 = node(i);
     s << "Node#" << i << ": row_pos = " << node1->row_pos();
     if ( node1->deleted() ) {
@@ -138,7 +138,7 @@ MisNodeHeap::print(ostream& s)
   s << endl;
 
   s << " heap_size = " << mNodeNum << endl;
-  for (ymuint i = 0; i < mNodeNum; ++ i) {
+  for ( int i = 0; i < mNodeNum; ++ i ) {
     MisNode* node1 = mNodeHeap[i];
 
     ASSERT_COND( node1->mHeapIdx - 1 == i );

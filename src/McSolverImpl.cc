@@ -19,7 +19,7 @@
 BEGIN_NAMESPACE_YM_MINCOV
 
 static
-ymuint solve_id = 0;
+int solve_id = 0;
 
 // 2つの行列が等しいかをチェックする関数
 // 等しくなければ例外を送出する．
@@ -109,8 +109,8 @@ McSolverImpl::McSolverImpl(const McMatrix& matrix,
 // @param[in] lb_calc 下界の計算クラス
 // @param[in] selector 列を選択するクラス
 McSolverImpl::McSolverImpl(McMatrix& matrix,
-			   const vector<ymuint32>& row_list,
-			   const vector<ymuint32>& col_list,
+			   const vector<int>& row_list,
+			   const vector<int>& col_list,
 			   LbCalc& lb_calc,
 			   Selector& selector) :
   mMatrix(matrix, row_list, col_list),
@@ -127,8 +127,8 @@ McSolverImpl::~McSolverImpl()
 // @brief 最小被覆問題を解く．
 // @param[out] solution 選ばれた列集合
 // @return 解のコスト
-ymuint32
-McSolverImpl::exact(vector<ymuint32>& solution)
+int
+McSolverImpl::exact(vector<int>& solution)
 {
   // 検証用にもとの行列をコピーしておく．
   McMatrix orig_matrix(mMatrix);
@@ -158,17 +158,17 @@ McSolverImpl::exact(vector<ymuint32>& solution)
 
 // @brief 解を求める再帰関数
 bool
-McSolverImpl::solve(ymuint lb,
-		    ymuint depth)
+McSolverImpl::solve(int lb,
+		    int depth)
 {
-  ymuint cur_id = solve_id;
+  int cur_id = solve_id;
   ++ solve_id;
 
   mMatrix.reduce(mCurSolution);
 
-  ymuint32 tmp_cost = mMatrix.cost(mCurSolution);
+  int tmp_cost = mMatrix.cost(mCurSolution);
 
-  ymuint32 tmp_lb = mLbCalc(mMatrix) + tmp_cost;
+  int tmp_lb = mLbCalc(mMatrix) + tmp_cost;
   if ( lb < tmp_lb ) {
     lb = tmp_lb;
   }
@@ -179,8 +179,8 @@ McSolverImpl::solve(ymuint lb,
   }
 
   if ( cur_debug ) {
-    ymuint nr = mMatrix.row_num();
-    ymuint nc = mMatrix.col_num();
+    int nr = mMatrix.row_num();
+    int nc = mMatrix.col_num();
     cout << "[" << depth << "] " << nr << "x" << nc
 	 << " sel=" << tmp_cost << " bnd=" << mBest
 	 << " lb=" << lb;
@@ -202,10 +202,10 @@ McSolverImpl::solve(ymuint lb,
     return true;
   }
 
-  vector<ymuint32> row_list1;
-  vector<ymuint32> row_list2;
-  vector<ymuint32> col_list1;
-  vector<ymuint32> col_list2;
+  vector<int> row_list1;
+  vector<int> row_list2;
+  vector<int> col_list1;
+  vector<int> col_list2;
   if ( mDoPartition && mMatrix.block_partition(row_list1, row_list2, col_list1, col_list2) ) {
     // ブロック分割を行う．
     McSolverImpl solver1(mMatrix, row_list1, col_list1, mLbCalc, mSelector);
@@ -220,8 +220,8 @@ McSolverImpl::solve(ymuint lb,
     }
     solver1.mMatrix.save();
     solver2.mMatrix.save();
-    ymuint32 cost_so_far = mMatrix.cost(mCurSolution);
-    ymuint lb_rest = mLbCalc(solver2.matrix());
+    int cost_so_far = mMatrix.cost(mCurSolution);
+    int lb_rest = mLbCalc(solver2.matrix());
     solver1.mBest = mBest - cost_so_far - lb_rest;
     solver1.mCurSolution.clear();
     bool stat1 = solver1.solve(0, depth + 1);
@@ -252,14 +252,14 @@ McSolverImpl::solve(ymuint lb,
   }
 
   // 次の分岐のための列をとってくる．
-  ymuint col = mSelector(mMatrix);
+  int col = mSelector(mMatrix);
 
 #if defined(VERIFY_MINCOV)
   McMatrix orig_matrix(mMatrix);
-  vector<ymuint32> orig_solution(mCurSolution);
+  vector<int> orig_solution(mCurSolution);
 #endif
 
-  ymuint cur_n = mCurSolution.size();
+  int cur_n = mCurSolution.size();
   mMatrix.save();
 
   // その列を選択したときの最良解を求める．
@@ -273,8 +273,8 @@ McSolverImpl::solve(ymuint lb,
   bool stat1 = solve(lb, depth + 1);
 
   mMatrix.restore();
-  ymuint c = mCurSolution.size() - cur_n;
-  for (ymuint i = 0; i < c; ++ i) {
+  int c = mCurSolution.size() - cur_n;
+  for ( int i = 0; i < c; ++ i ) {
     mCurSolution.pop_back();
   }
 
@@ -323,7 +323,7 @@ McSolverImpl::set_debug(bool flag)
 
 // @brief mMaxDepth を設定する．
 void
-McSolverImpl::set_max_depth(ymuint depth)
+McSolverImpl::set_max_depth(int depth)
 {
   mMaxDepth = depth;
 }
@@ -334,7 +334,7 @@ McSolverImpl::mDoPartition = true;
 bool
 McSolverImpl::mDebug = false;
 
-ymuint32
+int
 McSolverImpl::mMaxDepth = 0;
 
 END_NAMESPACE_YM_MINCOV

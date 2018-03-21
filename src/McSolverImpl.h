@@ -40,8 +40,8 @@ public:
   /// @param[in] lb_calc 下界の計算クラス
   /// @param[in] selector 列を選択するクラス
   McSolverImpl(McMatrix& matrix,
-	       const vector<ymuint32>& row_list,
-	       const vector<ymuint32>& col_list,
+	       const vector<int>& row_list,
+	       const vector<int>& col_list,
 	       LbCalc& lb_calc,
 	       Selector& selector);
 
@@ -57,8 +57,8 @@ public:
   /// @brief 最小被覆問題を解く．
   /// @param[out] solution 選ばれた列集合
   /// @return 解のコスト
-  ymuint32
-  exact(vector<ymuint32>& solution);
+  int
+  exact(vector<int>& solution);
 
   /// @brief 内部の行列を返す．
   const McMatrix&
@@ -77,7 +77,7 @@ public:
   /// @brief mMaxDepth を設定する．
   static
   void
-  set_max_depth(ymuint depth);
+  set_max_depth(int depth);
 
 
 private:
@@ -87,8 +87,8 @@ private:
 
   /// @brief 解を求める再帰関数
   bool
-  solve(ymuint lb,
-	ymuint depth);
+  solve(int lb,
+	int depth);
 
 
 private:
@@ -106,13 +106,13 @@ private:
   McMatrix mMatrix;
 
   // 現在のベスト
-  ymuint32 mBest;
+  int mBest;
 
   // 現在のベスト解
-  vector<ymuint32> mBestSolution;
+  vector<int> mBestSolution;
 
   // 現在の解
-  vector<ymuint32> mCurSolution;
+  vector<int> mCurSolution;
 
   // block_partition を行うとき true にするフラグ
   static
@@ -124,7 +124,7 @@ private:
 
   // デバッグで表示する最大深さ
   static
-  ymuint32 mMaxDepth;
+  int mMaxDepth;
 
 };
 

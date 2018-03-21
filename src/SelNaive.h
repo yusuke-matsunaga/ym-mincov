@@ -32,7 +32,7 @@ public:
   /// @param[in] matrix 対象の行列
   /// @return 選ばれた列番号を返す．
   virtual
-  ymuint
+  int
   operator()(const McMatrix& matrix);
 
 };
