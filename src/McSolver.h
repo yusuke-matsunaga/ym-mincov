@@ -63,12 +63,12 @@ public:
   exact(vector<int>& solution);
 
   /// @brief ヒューリスティックで最小被覆問題を解く．
+  /// @param[in] algorithm ヒューリスティックの名前
   /// @param[out] solution 選ばれた列集合
-  /// @param[in] alg ヒューリスティックの種類
   /// @return 解のコスト
   int
-  heuristic(vector<int>& solution,
-	    MinCov::AlgType alg);
+  heuristic(const string& algorithm,
+	    vector<int>& solution);
 
   /// @brief 内部の行列の内容を出力する．
   /// @param[in] s 出力先のストリーム

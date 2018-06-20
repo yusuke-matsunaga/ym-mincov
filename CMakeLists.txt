@@ -39,7 +39,8 @@ include_directories (
 # サブディレクトリの設定
 # ===================================================================
 
-#add_subdirectory ( cython-src )
+add_subdirectory ( cython-src )
+add_subdirectory ( python )
 
 
 # ===================================================================

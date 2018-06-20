@@ -22,16 +22,6 @@ class MinCov
 {
 public:
 
-  /// @brief ヒューリスティックの種類を表す列挙型
-  enum class AlgType {
-    kGreedy,
-    kRandom,
-    kMCT
-  };
-
-
-public:
-
   /// @brief コンストラクタ
   MinCov();
 
@@ -52,7 +42,7 @@ public:
 	   int col_size);
 
   /// @brief 列のコストを設定する
-  /// @param[in] col_pos 追加する要素の列番号
+  /// @param[in] col_pos 追加する要素の列番号 ( 0 <= col_pos < col_size )
   /// @param[in] cost コスト
   void
   set_col_cost(int col_pos,
@@ -73,24 +63,34 @@ public:
 
   /// @brief ヒューリスティックで最小被覆問題を解く．
   /// @param[out] solution 選ばれた列集合
-  /// @param[in] alg ヒューリスティックの種類
+  /// @return 解のコスト
+  ///
+  /// デフォルトのヒューリスティック(greedy)を用いる．
+  int
+  heuristic(vector<int>& solution);
+
+  /// @brief ヒューリスティックで最小被覆問題を解く．
+  /// @param[in] algorithm ヒューリスティックの名前
+  /// @param[out] solution 選ばれた列集合
   /// @return 解のコスト
   int
-  heuristic(vector<int>& solution,
-	    AlgType alg = AlgType::kGreedy);
+  heuristic(const string& algorithm,
+	    vector<int>& solution);
 
   /// @brief partition フラグを設定する．
   /// @param[in] flag 分割を行う時 true にセットする．
   void
-  set_partition(bool flag);
+  set_partition_flag(bool flag);
 
   /// @brief デバッグフラグを設定する．
   /// @param[in] flag デバッグ情報を出力する時 true にセットする．
   void
-  set_debug(bool flag);
+  set_debug_flag(bool flag);
 
   /// @brief デバッグで表示する最大深さを設定する．
   /// @param[in] depth セットする最大深さ
+  ///
+  /// デバッグフラグが false の時は意味を持たない．
   void
   set_max_depth(int depth);
 

@@ -71,25 +71,37 @@ MinCov::exact(vector<int>& solution)
 
 // @brief ヒューリスティックで最小被覆問題を解く．
 // @param[out] solution 選ばれた列集合
-// @param[in] alg ヒューリスティックの種類
+// @param[in] algorithm ヒューリスティックの名前
+// @return 解のコスト
+//
+// デフォルトのヒューリスティック(greedy)を用いる．
+int
+MinCov::heuristic(vector<int>& solution)
+{
+  return mSolver->heuristic("greedy", solution);
+}
+
+// @brief ヒューリスティックで最小被覆問題を解く．
+// @param[in] algorithm ヒューリスティックの名前
+// @param[out] solution 選ばれた列集合
 // @return 解のコスト
 int
-MinCov::heuristic(vector<int>& solution,
-		  AlgType alg)
+MinCov::heuristic(const string& algorithm,
+		  vector<int>& solution)
 {
-  return mSolver->heuristic(solution, alg);
+  return mSolver->heuristic(algorithm, solution);
 }
 
 // @brief partition フラグを設定する．
 void
-MinCov::set_partition(bool flag)
+MinCov::set_partition_flag(bool flag)
 {
   nsMincov::McSolverImpl::set_partition(flag);
 }
 
 // @brief デバッグフラグを設定する．
 void
-MinCov::set_debug(bool flag)
+MinCov::set_debug_flag(bool flag)
 {
   nsMincov::McSolverImpl::set_debug(flag);
 }

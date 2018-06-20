@@ -104,11 +104,11 @@ McSolver::exact(vector<int>& solution)
 
 // @brief ヒューリスティックで最小被覆問題を解く．
 // @param[out] solution 選ばれた列集合
-// @param[in] alg ヒューリスティックの種類
+// @param[in] algorithm ヒューリスティックの名前
 // @return 解のコスト
 int
-McSolver::heuristic(vector<int>& solution,
-		    MinCov::AlgType alg)
+McSolver::heuristic(const string& algorithm,
+		    vector<int>& solution)
 {
   McMatrix cur_matrix(*mMatrix);
 
@@ -116,17 +116,19 @@ McSolver::heuristic(vector<int>& solution,
   cur_matrix.reduce(solution);
 
   if ( cur_matrix.row_num() > 0 ) {
-    switch ( alg ) {
-    case MinCov::AlgType::kGreedy:
+
+    if ( algorithm == "greedy" ) {
       greedy(cur_matrix, solution);
-      break;
-
-    case MinCov::AlgType::kRandom:
+    }
+    else if ( algorithm == "random" ) {
       random(cur_matrix, solution);
-      break;
-
-    case MinCov::AlgType::kMCT:
-      break;
+    }
+    else if ( algorithm == "MCT" ) {
+      ;
+    }
+    else {
+      // デフォルトフォールバックは greedy
+      greedy(cur_matrix, solution);
     }
   }
 
@@ -242,9 +244,7 @@ McSolver::random(const McMatrix& matrix,
     }
   }
 
-  for (vector<int>::iterator p = best_solution.begin();
-       p != best_solution.end(); ++ p) {
-    int col = *p;
+  for ( auto col: best_solution ) {
     solution.push_back(col);
   }
 }
